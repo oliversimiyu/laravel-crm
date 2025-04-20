@@ -1,188 +1,149 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <!-- Statistics Grid -->
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                    <div class="text-3xl font-bold text-blue-600">{{ $stats['companies'] }}</div>
-                    <div class="text-gray-600 dark:text-gray-400">Companies</div>
-                </div>
-                
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                    <div class="text-3xl font-bold text-emerald-600">{{ $stats['customers'] }}</div>
-                    <div class="text-gray-600 dark:text-gray-400">Customers</div>
-                </div>
-                
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                    <div class="text-3xl font-bold text-amber-600">{{ $stats['leads'] }}</div>
-                    <div class="text-gray-600 dark:text-gray-400">Leads</div>
-                </div>
-                
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                    <div class="text-3xl font-bold text-violet-600">{{ $stats['communications'] }}</div>
-                    <div class="text-gray-600 dark:text-gray-400">Communications</div>
-                </div>
-                
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                    <div class="text-3xl font-bold text-sky-600">{{ $stats['tasks'] }}</div>
-                    <div class="text-gray-600 dark:text-gray-400">Tasks</div>
-                </div>
-                
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                    <div class="text-3xl font-bold text-rose-600">{{ $stats['sales'] }}</div>
-                    <div class="text-gray-600 dark:text-gray-400">Sales</div>
+    <div class="min-h-screen bg-gray-900">
+        <!-- Top Navigation Bar -->
+        <nav class="bg-gray-800 border-b border-gray-700">
+            <div class="w-full px-6">
+                <div class="flex items-center justify-between h-16">
+                    <div class="flex items-center">
+                        <div class="text-xl font-bold text-white">CRM Dashboard</div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-150">
+                            <i class="fas fa-plus mr-2"></i>New Entry
+                        </button>
+                    </div>
                 </div>
             </div>
+        </nav>
 
-            <!-- Quick Actions -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Main Content -->
+        <div class="w-full px-6 py-8">
+            <!-- Stats Overview -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 mx-0">
                 <!-- Companies Card -->
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Companies</h3>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600 dark:text-gray-400">Manage your companies</span>
-                            <a href="{{ route('companies.index') }}" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">View All</a>
+                <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-3 bg-blue-500/10 rounded-lg">
+                            <i class="fas fa-building text-blue-500 text-xl"></i>
                         </div>
+                        <a href="{{ route('companies.create') }}" class="text-blue-500 hover:text-blue-400">
+                            <i class="fas fa-plus"></i>
+                        </a>
                     </div>
+                    <h3 class="text-2xl font-bold text-white mb-1">{{ number_format($stats['companies'] ?? 0) }}</h3>
+                    <p class="text-gray-400">Total Companies</p>
                 </div>
 
                 <!-- Customers Card -->
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Customers</h3>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600 dark:text-gray-400">Manage your customers</span>
-                            <a href="{{ route('customers.index') }}" class="px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700">View All</a>
+                <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-3 bg-blue-500/10 rounded-lg">
+                            <i class="fas fa-users text-blue-500 text-xl"></i>
                         </div>
+                        <a href="{{ route('customers.create') }}" class="text-blue-500 hover:text-blue-400">
+                            <i class="fas fa-plus"></i>
+                        </a>
                     </div>
+                    <h3 class="text-2xl font-bold text-white mb-1">{{ number_format($stats['customers'] ?? 0) }}</h3>
+                    <p class="text-gray-400">Total Customers</p>
                 </div>
 
                 <!-- Leads Card -->
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Leads</h3>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600 dark:text-gray-400">Track your leads</span>
-                            <a href="{{ route('leads.index') }}" class="px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700">View All</a>
+                <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-3 bg-blue-500/10 rounded-lg">
+                            <i class="fas fa-bullseye text-blue-500 text-xl"></i>
                         </div>
+                        <a href="{{ route('leads.create') }}" class="text-blue-500 hover:text-blue-400">
+                            <i class="fas fa-plus"></i>
+                        </a>
                     </div>
+                    <h3 class="text-2xl font-bold text-white mb-1">{{ number_format($stats['leads'] ?? 0) }}</h3>
+                    <p class="text-gray-400">Active Leads</p>
                 </div>
 
-                <!-- Communications Card -->
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Communications</h3>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600 dark:text-gray-400">Log communications</span>
-                            <a href="{{ route('communications.index') }}" class="px-4 py-2 bg-violet-600 text-white rounded-md hover:bg-violet-700">View All</a>
+                <!-- Revenue Card -->
+                <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-3 bg-blue-500/10 rounded-lg">
+                            <i class="fas fa-dollar-sign text-blue-500 text-xl"></i>
                         </div>
+                        <a href="{{ route('sales.create') }}" class="text-blue-500 hover:text-blue-400">
+                            <i class="fas fa-plus"></i>
+                        </a>
                     </div>
-                </div>
-
-                <!-- Tasks Card -->
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Tasks</h3>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600 dark:text-gray-400">Manage tasks</span>
-                            <a href="{{ route('tasks.index') }}" class="px-4 py-2 bg-sky-600 text-white rounded-md hover:bg-sky-700">View All</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sales Card -->
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Sales</h3>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-600 dark:text-gray-400">Track sales</span>
-                            <a href="{{ route('sales.index') }}" class="px-4 py-2 bg-rose-600 text-white rounded-md hover:bg-rose-700">View All</a>
-                        </div>
-                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-1">${{ number_format($stats['revenue'] ?? 0) }}</h3>
+                    <p class="text-gray-400">Total Revenue</p>
                 </div>
             </div>
 
-            <!-- Recent Activities -->
-            <div class="mt-8">
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Recent Activities</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <!-- Recent Leads -->
-                            <div>
-                                <h4 class="font-medium text-gray-700 dark:text-gray-300 mb-2">Latest Leads</h4>
-                                @forelse($recentActivities['leads'] as $lead)
-                                    <div class="mb-2 p-2 bg-amber-50 dark:bg-amber-900 rounded">
-                                        <div class="font-medium">{{ $lead->title }}</div>
-                                        <div class="text-sm text-gray-600 dark:text-gray-400">{{ $lead->created_at->diffForHumans() }}</div>
-                                    </div>
-                                @empty
-                                    <p class="text-gray-500">No recent leads</p>
-                                @endforelse
+            <!-- Quick Actions & Recent Activity -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mx-0">
+                <!-- Quick Actions -->
+                <div class="lg:col-span-2 bg-gray-800 rounded-lg p-6 border border-gray-700">
+                    <h2 class="text-xl font-semibold text-white mb-6">Quick Actions</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <a href="{{ route('customers.create') }}" class="flex items-center p-4 bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors duration-150">
+                            <div class="p-3 bg-blue-500/10 rounded-lg mr-4">
+                                <i class="fas fa-user-plus text-blue-500"></i>
                             </div>
-
-                            <!-- Recent Tasks -->
                             <div>
-                                <h4 class="font-medium text-gray-700 dark:text-gray-300 mb-2">Latest Tasks</h4>
-                                @forelse($recentActivities['tasks'] as $task)
-                                    <div class="mb-2 p-2 bg-sky-50 dark:bg-sky-900 rounded">
-                                        <div class="font-medium">{{ $task->title }}</div>
-                                        <div class="text-sm text-gray-600 dark:text-gray-400">{{ $task->created_at->diffForHumans() }}</div>
-                                    </div>
-                                @empty
-                                    <p class="text-gray-500">No recent tasks</p>
-                                @endforelse
+                                <h3 class="text-white font-medium">New Customer</h3>
+                                <p class="text-gray-400 text-sm">Add a new customer record</p>
                             </div>
-
-                            <!-- Recent Communications -->
+                        </a>
+                        <a href="{{ route('companies.create') }}" class="flex items-center p-4 bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors duration-150">
+                            <div class="p-3 bg-blue-500/10 rounded-lg mr-4">
+                                <i class="fas fa-building text-blue-500"></i>
+                            </div>
                             <div>
-                                <h4 class="font-medium text-gray-700 dark:text-gray-300 mb-2">Latest Communications</h4>
-                                @forelse($recentActivities['communications'] as $communication)
-                                    <div class="mb-2 p-2 bg-violet-50 dark:bg-violet-900 rounded">
-                                        <div class="font-medium">{{ $communication->title }}</div>
-                                        <div class="text-sm text-gray-600 dark:text-gray-400">{{ $communication->created_at->diffForHumans() }}</div>
-                                    </div>
-                                @empty
-                                    <p class="text-gray-500">No recent communications</p>
-                                @endforelse
+                                <h3 class="text-white font-medium">New Company</h3>
+                                <p class="text-gray-400 text-sm">Add a new company record</p>
                             </div>
-                        </div>
+                        </a>
+                        <a href="{{ route('leads.create') }}" class="flex items-center p-4 bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors duration-150">
+                            <div class="p-3 bg-blue-500/10 rounded-lg mr-4">
+                                <i class="fas fa-bullseye text-blue-500"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-medium">New Lead</h3>
+                                <p class="text-gray-400 text-sm">Create a new lead</p>
+                            </div>
+                        </a>
+                        <a href="{{ route('sales.create') }}" class="flex items-center p-4 bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors duration-150">
+                            <div class="p-3 bg-blue-500/10 rounded-lg mr-4">
+                                <i class="fas fa-dollar-sign text-blue-500"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-white font-medium">New Sale</h3>
+                                <p class="text-gray-400 text-sm">Record a new sale</p>
+                            </div>
+                        </a>
                     </div>
                 </div>
-            </div>
 
-            <!-- Quick Actions -->
-            <div class="mt-8">
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Quick Actions</h3>
-                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                            <a href="{{ route('companies.create') }}" class="inline-flex items-center justify-center px-4 py-2 bg-blue-100 text-blue-800 rounded-md hover:bg-blue-200">
-                                New Company
-                            </a>
-                            <a href="{{ route('customers.create') }}" class="inline-flex items-center justify-center px-4 py-2 bg-emerald-100 text-emerald-800 rounded-md hover:bg-emerald-200">
-                                New Customer
-                            </a>
-                            <a href="{{ route('leads.create') }}" class="inline-flex items-center justify-center px-4 py-2 bg-amber-100 text-amber-800 rounded-md hover:bg-amber-200">
-                                New Lead
-                            </a>
-                            <a href="{{ route('communications.create') }}" class="inline-flex items-center justify-center px-4 py-2 bg-violet-100 text-violet-800 rounded-md hover:bg-violet-200">
-                                New Communication
-                            </a>
-                            <a href="{{ route('tasks.create') }}" class="inline-flex items-center justify-center px-4 py-2 bg-sky-100 text-sky-800 rounded-md hover:bg-sky-200">
-                                New Task
-                            </a>
-                            <a href="{{ route('sales.create') }}" class="inline-flex items-center justify-center px-4 py-2 bg-rose-100 text-rose-800 rounded-md hover:bg-rose-200">
-                                New Sale
-                            </a>
-                        </div>
+                <!-- Recent Activity -->
+                <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                    <h2 class="text-xl font-semibold text-white mb-6">Recent Activity</h2>
+                    <div class="space-y-4">
+                        @forelse($recentActivities ?? [] as $activity)
+                            <div class="flex items-center p-3 bg-gray-700 rounded-lg">
+                                <div class="p-2 bg-blue-500/10 rounded-lg mr-3">
+                                    <i class="fas fa-{{ $activity['type'] ?? 'circle' }} text-blue-500"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm text-white truncate">{{ $activity['description'] ?? 'New activity' }}</p>
+                                    <p class="text-xs text-gray-400">{{ \Carbon\Carbon::parse($activity['created_at'] ?? now())->diffForHumans() }}</p>
+                                </div>
+                            </div>
+                        @empty
+                            <div class="text-center py-8">
+                                <div class="p-3 bg-blue-500/10 rounded-lg inline-block mb-3">
+                                    <i class="fas fa-stream text-blue-400 text-xl"></i>
+                                </div>
+                                <p class="text-gray-400">No recent activity</p>
+                            </div>
+                        @endforelse
                     </div>
                 </div>
             </div>

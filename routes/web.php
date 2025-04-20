@@ -8,6 +8,7 @@ use App\Http\Controllers\LeadController;
 use App\Http\Controllers\CommunicationController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\AppointmentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,6 +41,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
     // Sales
     Route::resource('sales', SaleController::class);
+
+    // Calendar & Appointments
+    Route::get('/calendar', [AppointmentController::class, 'index'])->name('calendar.index');
+    Route::resource('appointments', AppointmentController::class)->except(['index']);
 });
 
 Route::middleware('auth')->group(function () {
