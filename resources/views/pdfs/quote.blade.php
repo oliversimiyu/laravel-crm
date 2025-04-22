@@ -4,49 +4,56 @@
     <meta charset="utf-8">
     <title>Quote {{ $quote->quote_number }}</title>
     <style>
+        @page {
+            margin: 0.5cm;
+        }
         body {
             font-family: Arial, sans-serif;
             color: #333;
-            line-height: 1.5;
+            line-height: 1.3;
+            font-size: 10px;
+            margin: 0;
+            padding: 0;
         }
         .container {
-            max-width: 800px;
+            max-width: 100%;
             margin: 0 auto;
+            padding: 10px;
         }
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 15px;
         }
         .quote-title {
-            font-size: 24px;
+            font-size: 18px;
             font-weight: bold;
             color: #2d3748;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
         .company-details {
-            margin-bottom: 30px;
+            margin-bottom: 15px;
         }
         .quote-details {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
         .customer-details {
-            margin-bottom: 30px;
+            margin-bottom: 15px;
         }
         .section-title {
-            font-size: 16px;
+            font-size: 12px;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 3px;
             color: #2d3748;
             border-bottom: 1px solid #ddd;
-            padding-bottom: 5px;
+            padding-bottom: 2px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 30px;
+            margin-bottom: 15px;
         }
         th, td {
-            padding: 10px;
+            padding: 4px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
@@ -58,32 +65,32 @@
             text-align: right;
         }
         .totals {
-            width: 300px;
+            width: 250px;
             float: right;
-            margin-bottom: 30px;
+            margin-bottom: 15px;
         }
         .totals table {
             width: 100%;
         }
         .notes {
             clear: both;
-            margin-top: 40px;
-            padding-top: 20px;
+            margin-top: 15px;
+            padding-top: 8px;
             border-top: 1px solid #ddd;
         }
         .footer {
-            margin-top: 50px;
+            margin-top: 25px;
             text-align: center;
-            font-size: 12px;
+            font-size: 9px;
             color: #6c757d;
         }
         .status {
             display: inline-block;
-            padding: 5px 10px;
-            border-radius: 4px;
+            padding: 2px 4px;
+            border-radius: 3px;
             font-weight: bold;
             text-transform: uppercase;
-            font-size: 12px;
+            font-size: 9px;
         }
         .status-draft {
             background-color: #f8f9fa;
@@ -116,10 +123,10 @@
         
         <div class="company-details">
             <div class="section-title">FROM</div>
-            <div>Laravel CRM</div>
+            <div>Oliver's Laravel CRM</div>
             <div>123 Business Street</div>
             <div>Nairobi, Kenya</div>
-            <div>Email: info@laravelcrm.com</div>
+            <div>Email: oliver@laravelcrm.com</div>
             <div>Phone: +254 700 000000</div>
         </div>
         
@@ -211,7 +218,7 @@
         
         <div class="footer">
             <p>Thank you for considering our services!</p>
-            <p>&copy; {{ date('Y') }} Laravel CRM. All rights reserved.</p>
+            <p>&copy; {{ date('Y') }} Oliver's Laravel CRM. All rights reserved.</p>
         </div>
     </div>
 </body>

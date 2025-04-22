@@ -21,7 +21,7 @@ class InvoiceMail extends Mailable
     public function __construct(
         public Invoice $invoice,
         public string $emailMessage = '',
-        public string $subject = 'Your Invoice',
+        public string $emailSubject = 'Your Invoice',
         public bool $attachPdf = true
     ) {}
 
@@ -31,7 +31,7 @@ class InvoiceMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->subject,
+            subject: $this->emailSubject,
         );
     }
 
@@ -44,7 +44,7 @@ class InvoiceMail extends Mailable
             view: 'emails.invoice',
             with: [
                 'invoice' => $this->invoice,
-                'message' => $this->emailMessage,
+                'message' => (string)$this->emailMessage,
                 'customerName' => $this->invoice->customer->full_name,
             ],
         );

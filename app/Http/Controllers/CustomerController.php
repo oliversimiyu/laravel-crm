@@ -91,7 +91,7 @@ class CustomerController extends Controller
 
         // Get statistics
         $customer->active_leads_count = $customer->leads()->where('status', 'active')->count();
-        $customer->total_sales = $customer->sales()->sum('total');
+        $customer->total_sales = $customer->sales()->sum('amount');
         $customer->pending_tasks_count = $customer->tasks()->where('status', 'pending')->count();
 
         return view('customers.show', compact('customer'));

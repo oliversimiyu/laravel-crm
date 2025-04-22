@@ -13,13 +13,13 @@
             @forelse ($sales as $sale)
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm font-medium text-gray-900">{{ $sale->number }}</div>
+                        <div class="text-sm font-medium text-gray-900">{{ $sale->invoice_number }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-900">{{ $sale->sale_date->format('M d, Y') }}</div>
+                        <div class="text-sm text-gray-900">{{ $sale->date->format('M d, Y') }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-900">KES {{ number_format($sale->total, 2) }}</div>
+                        <div class="text-sm text-gray-900">KES {{ number_format($sale->amount, 2) }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 

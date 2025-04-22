@@ -37,6 +37,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
     // Leads
     Route::resource('leads', LeadController::class);
+    Route::post('/leads/{lead}/convert', [LeadController::class, 'convert'])->name('leads.convert');
     
     // Communications
     Route::resource('communications', CommunicationController::class);

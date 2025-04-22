@@ -72,7 +72,11 @@
         <p>Dear {{ $customerName }},</p>
         
         <div class="message">
-            {!! nl2br(e($message)) !!}
+            @if(is_string($message))
+                {!! nl2br(e($message)) !!}
+            @else
+                <!-- No message provided -->
+            @endif
         </div>
         
         <div class="quote-details">
@@ -89,7 +93,7 @@
         <p>Thank you for considering our services!</p>
         
         <div class="footer">
-            <p>&copy; {{ date('Y') }} Laravel CRM. All rights reserved.</p>
+            <p>&copy; {{ date('Y') }} Oliver's Laravel CRM. All rights reserved.</p>
         </div>
     </div>
 </body>

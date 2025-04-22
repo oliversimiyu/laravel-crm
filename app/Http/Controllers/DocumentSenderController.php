@@ -37,7 +37,7 @@ class DocumentSenderController extends Controller
         Mail::to($request->email)
             ->send(new InvoiceMail(
                 $invoice,
-                $request->message,
+                (string) $request->input('message', ''),
                 $request->subject,
                 $attachPdf
             ));
@@ -73,12 +73,13 @@ class DocumentSenderController extends Controller
         ]);
 
         $attachPdf = $request->has('attach_pdf');
+        $messageText = (string) $request->input('message', '');
         
         // Send the email
         Mail::to($request->email)
             ->send(new QuoteMail(
                 $quote,
-                $request->message,
+                $messageText,
                 $request->subject,
                 $attachPdf
             ));

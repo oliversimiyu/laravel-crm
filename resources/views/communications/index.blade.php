@@ -81,7 +81,7 @@
                                             {{ $communication->subject }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                                            {{ $communication->date->format('M d, Y') }}
+                                            {{ $communication->scheduled_at ? $communication->scheduled_at->format('M d, Y') : 'N/A' }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <div class="flex justify-end space-x-2">

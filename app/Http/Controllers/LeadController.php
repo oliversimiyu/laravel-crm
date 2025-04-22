@@ -104,4 +104,54 @@ class LeadController extends Controller
         return redirect()->route('leads.index')
             ->with('success', 'Lead deleted successfully.');
     }
+
+    /**
+     * Convert a lead to a customer.
+     *
+     * @param Request $request
+     * @param Lead $lead
+     * @return RedirectResponse
+     */
+    public function convert(Request $request, Lead $lead): RedirectResponse
+    {
+        // Validate the request
+        $request->validate([
+            'notes' => 'nullable|string|max:1000',
+            'keep_lead' => 'nullable|boolean',
+        ]);
+
+        // Create a new customer from the lead data
+        $customer = \App\Models\Customer::create([
+            'first_name' => $lead->first_name,
+            'last_name' => $lead->last_name,
+            'email' => $lead->email,
+            'phone' => $lead->phone,
+            'position' => $lead->position,
+            'company_id' => $lead->company_id,
+            'notes' => $lead->notes . "\n\nConversion Notes: " . $request->notes,
+        ]);
+
+        // Log the activity
+        if (app()->bound('App\Services\ActivityService')) {
+            $activityService = app()->make('App\Services\ActivityService');
+            $activityService->log(
+                'convert',
+                'Converted lead to customer: ' . $lead->first_name . ' ' . $lead->last_name,
+                $customer,
+                'Lead #' . $lead->id . ' converted to Customer #' . $customer->id,
+                ['lead_id' => $lead->id]
+            );
+        }
+
+        // Delete the lead if not keeping it
+        if (!$request->has('keep_lead')) {
+            $lead->delete();
+        } else {
+            // Mark the lead as converted
+            $lead->update(['status' => 'closed_won']);
+        }
+
+        return redirect()->route('customers.show', $customer)
+            ->with('success', 'Lead successfully converted to customer.');
+    }
 }

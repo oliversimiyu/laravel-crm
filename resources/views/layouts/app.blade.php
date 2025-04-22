@@ -14,7 +14,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body>
-        <div class="min-h-screen bg-gray-900">
+        <div class="min-h-screen bg-gray-900 flex flex-col">
             <!-- Custom Navigation -->
             <nav class="navbar">
                 <a href="{{ route('dashboard') }}" class="navbar-brand">CRM</a>
@@ -76,9 +76,16 @@
             </nav>
 
             <!-- Page Content -->
-            <main class="container py-8">
+            <main class="container py-8 flex-grow">
                 @yield('content')
             </main>
+            
+            <!-- Footer -->
+            <footer class="bg-gray-800 py-4">
+                <div class="container mx-auto px-4">
+                    <p class="text-center text-gray-400 text-sm">&copy; {{ date('Y') }} Oliver's Laravel CRM. All rights reserved.</p>
+                </div>
+            </footer>
         </div>
 
         <script>

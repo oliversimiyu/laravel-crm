@@ -10,6 +10,7 @@ use App\Models\Communication;
 use App\Models\Task;
 use App\Models\Quotation;
 use App\Models\Sale;
+use App\Models\Invoice;
 
 class Customer extends Model
 {
@@ -32,17 +33,17 @@ class Customer extends Model
 
     public function leads()
     {
-        return $this->hasMany(Lead::class);
+        return $this->hasMany(Lead::class, 'email', 'email');
     }
 
     public function communications()
     {
-        return $this->hasMany(Communication::class);
+        return $this->morphMany(Communication::class, 'communicatable');
     }
 
     public function tasks()
     {
-        return $this->hasMany(Task::class);
+        return $this->morphMany(Task::class, 'taskable');
     }
 
     public function quotations()
@@ -53,5 +54,10 @@ class Customer extends Model
     public function sales()
     {
         return $this->hasMany(Sale::class);
+    }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
     }
 }

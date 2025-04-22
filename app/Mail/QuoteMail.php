@@ -21,7 +21,7 @@ class QuoteMail extends Mailable
     public function __construct(
         public Quote $quote,
         public string $emailMessage = '',
-        public string $subject = 'Your Quote',
+        public string $emailSubject = 'Your Quote',
         public bool $attachPdf = true
     ) {}
 
@@ -31,7 +31,7 @@ class QuoteMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->subject,
+            subject: $this->emailSubject,
         );
     }
 
@@ -44,7 +44,7 @@ class QuoteMail extends Mailable
             view: 'emails.quote',
             with: [
                 'quote' => $this->quote,
-                'message' => $this->emailMessage,
+                'message' => (string)$this->emailMessage,
                 'customerName' => $this->quote->customer->full_name,
             ],
         );

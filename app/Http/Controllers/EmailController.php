@@ -68,7 +68,7 @@ class EmailController extends Controller
                 'subject' => $request->subject,
                 'content' => $request->message,
                 'status' => 'sent',
-                'date' => now(),
+                'scheduled_at' => now(),
             ]);
 
             // Log activity

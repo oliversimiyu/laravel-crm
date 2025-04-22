@@ -75,7 +75,7 @@
                                             {{ $sale->customer->first_name }} {{ $sale->customer->last_name }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                                            {{ $sale->sale_date->format('M d, Y') }}
+                                            {{ $sale->date ? $sale->date->format('M d, Y') : 'N/A' }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                                             KES {{ number_format($sale->amount, 2) }}
