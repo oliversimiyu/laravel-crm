@@ -12,7 +12,7 @@
         <!-- Email Address -->
         <div class="auth-form-group">
             <label for="email" class="auth-label">{{ __('Email') }}</label>
-            <input id="email" class="auth-input" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username" />
+            <input id="email" class="auth-input bg-gray-800 border-gray-700 text-white focus:border-blue-500 focus:ring-blue-500" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username" />
             @error('email')
                 <div class="auth-error">{{ $message }}</div>
             @enderror
@@ -21,7 +21,7 @@
         <!-- Password -->
         <div class="auth-form-group">
             <label for="password" class="auth-label">{{ __('Password') }}</label>
-            <input id="password" class="auth-input" type="password" name="password" required autocomplete="current-password" />
+            <input id="password" class="auth-input bg-gray-800 border-gray-700 text-white focus:border-blue-500 focus:ring-blue-500" type="password" name="password" required autocomplete="current-password" />
             @error('password')
                 <div class="auth-error">{{ $message }}</div>
             @enderror

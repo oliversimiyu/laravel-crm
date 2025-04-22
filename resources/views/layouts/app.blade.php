@@ -17,37 +17,67 @@
         <div class="min-h-screen bg-gray-900">
             <!-- Custom Navigation -->
             <nav class="navbar">
-                <a href="{{ route('dashboard') }}" class="navbar-brand">CRM Dashboard</a>
+                <a href="{{ route('dashboard') }}" class="navbar-brand">CRM</a>
                 
-                <ul class="navbar-nav">
-                    <li><a href="{{ route('dashboard') }}" class="nav-link">Dashboard</a></li>
-                    <li><a href="{{ route('companies.index') }}" class="nav-link">Companies</a></li>
-                    <li><a href="{{ route('customers.index') }}" class="nav-link">Customers</a></li>
-                    <li><a href="{{ route('leads.index') }}" class="nav-link">Leads</a></li>
-                    <li><a href="{{ route('communications.index') }}" class="nav-link">Communications</a></li>
-                    <li><a href="{{ route('sales.index') }}" class="nav-link">Sales</a></li>
+                <div class="navbar-nav">
+                    <a href="{{ route('dashboard') }}" class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                        <span class="nav-icon">⌂</span>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="{{ route('companies.index') }}" class="nav-item {{ request()->routeIs('companies.*') ? 'active' : '' }}">
+                        <span class="nav-icon">C</span>
+                        <span>Companies</span>
+                    </a>
+                    <a href="{{ route('customers.index') }}" class="nav-item {{ request()->routeIs('customers.*') ? 'active' : '' }}">
+                        <span class="nav-icon">U</span>
+                        <span>Customers</span>
+                    </a>
+                    <a href="{{ route('leads.index') }}" class="nav-item {{ request()->routeIs('leads.*') ? 'active' : '' }}">
+                        <span class="nav-icon">L</span>
+                        <span>Leads</span>
+                    </a>
+                    <a href="{{ route('communications.index') }}" class="nav-item {{ request()->routeIs('communications.*') ? 'active' : '' }}">
+                        <span class="nav-icon">@</span>
+                        <span>Communications</span>
+                    </a>
+                    <a href="{{ route('sales.index') }}" class="nav-item {{ request()->routeIs('sales.*') ? 'active' : '' }}">
+                        <span class="nav-icon">$</span>
+                        <span>Sales</span>
+                    </a>
+                    <a href="{{ route('invoices.index') }}" class="nav-item {{ request()->routeIs('invoices.*') ? 'active' : '' }}">
+                        <span class="nav-icon">I</span>
+                        <span>Invoices</span>
+                    </a>
+                    <a href="{{ route('quotes.index') }}" class="nav-item {{ request()->routeIs('quotes.*') ? 'active' : '' }}">
+                        <span class="nav-icon">Q</span>
+                        <span>Quotes</span>
+                    </a>
+                </div>
+                
+                <div class="navbar-right">
+                    <a href="{{ route('emails.compose') }}" class="email-clients-btn">
+                        <span>Email clients</span>
+                    </a>
                     
-                    <li class="dropdown">
-                        <div class="user-dropdown">
-                            <button class="dropdown-toggle" onclick="toggleDropdown()">
-                                <span class="user-avatar">{{ substr(Auth::user()->name ?? 'U', 0, 1) }}</span>
-                                <span>{{ Auth::user()->name ?? 'John Doe' }}</span>
-                            </button>
-                            <div class="dropdown-menu" id="userDropdown">
-                                <a href="{{ route('profile.edit') }}" class="dropdown-item">Profile</a>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item">Logout</button>
-                                </form>
-                            </div>
+                    <div class="user-dropdown">
+                        <button class="dropdown-toggle" onclick="toggleDropdown()">
+                            <span class="user-avatar">{{ substr(Auth::user()->name ?? 'U', 0, 1) }}</span>
+                            <span class="user-name">{{ Auth::user()->name ?? 'User' }}</span>
+                        </button>
+                        <div class="dropdown-menu" id="userDropdown">
+                            <a href="{{ route('profile.edit') }}" class="dropdown-item">Profile</a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item">Logout</button>
+                            </form>
                         </div>
-                    </li>
-                </ul>
+                    </div>
+                </div>
             </nav>
 
             <!-- Page Content -->
             <main class="container py-8">
-                {{ $slot }}
+                @yield('content')
             </main>
         </div>
 
@@ -71,5 +101,7 @@
                 }
             }
         </script>
+        
+        @stack('scripts')
     </body>
 </html>

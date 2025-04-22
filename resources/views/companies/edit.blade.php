@@ -1,77 +1,130 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Edit Company') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
+@section('content')
+    <div class="py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-white">Edit Company</h1>
+                <a href="{{ route('companies.show', $company) }}" class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">
+                    Back to Company
+                </a>
+            </div>
+
+            <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                <div class="p-6 text-gray-100">
                     <form method="POST" action="{{ route('companies.update', $company) }}">
                         @csrf
                         @method('PUT')
 
-                        <div class="grid grid-cols-1 gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <!-- Name -->
                             <div>
-                                <x-input-label for="name" :value="__('Name')" />
-                                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $company->name)" required autofocus />
-                                <x-input-error class="mt-2" :messages="$errors->get('name')" />
+                                <label for="name" class="block text-sm font-medium text-gray-300">Name</label>
+                                <input id="name" name="name" type="text" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white" value="{{ old('name', $company->name) }}" required autofocus>
+                                @error('name')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
 
                             <!-- Industry -->
                             <div>
-                                <x-input-label for="industry" :value="__('Industry')" />
-                                <x-text-input id="industry" name="industry" type="text" class="mt-1 block w-full" :value="old('industry', $company->industry)" required />
-                                <x-input-error class="mt-2" :messages="$errors->get('industry')" />
-                            </div>
-
-                            <!-- Website -->
-                            <div>
-                                <x-input-label for="website" :value="__('Website')" />
-                                <x-text-input id="website" name="website" type="url" class="mt-1 block w-full" :value="old('website', $company->website)" />
-                                <x-input-error class="mt-2" :messages="$errors->get('website')" />
-                            </div>
-
-                            <!-- Phone -->
-                            <div>
-                                <x-input-label for="phone" :value="__('Phone')" />
-                                <x-text-input id="phone" name="phone" type="tel" class="mt-1 block w-full" :value="old('phone', $company->phone)" />
-                                <x-input-error class="mt-2" :messages="$errors->get('phone')" />
+                                <label for="industry" class="block text-sm font-medium text-gray-300">Industry</label>
+                                <input id="industry" name="industry" type="text" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white" value="{{ old('industry', $company->industry) }}" required>
+                                @error('industry')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
 
                             <!-- Email -->
                             <div>
-                                <x-input-label for="email" :value="__('Email')" />
-                                <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $company->email)" />
-                                <x-input-error class="mt-2" :messages="$errors->get('email')" />
+                                <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
+                                <input id="email" name="email" type="email" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white" value="{{ old('email', $company->email) }}">
+                                @error('email')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
 
-                            <!-- Address -->
+                            <!-- Phone -->
                             <div>
-                                <x-input-label for="address" :value="__('Address')" />
-                                <x-textarea id="address" name="address" class="mt-1 block w-full">{{ old('address', $company->address) }}</x-textarea>
-                                <x-input-error class="mt-2" :messages="$errors->get('address')" />
+                                <label for="phone" class="block text-sm font-medium text-gray-300">Phone</label>
+                                <input id="phone" name="phone" type="tel" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white" value="{{ old('phone', $company->phone) }}">
+                                @error('phone')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Website -->
+                            <div>
+                                <label for="website" class="block text-sm font-medium text-gray-300">Website</label>
+                                <input id="website" name="website" type="url" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white" value="{{ old('website', $company->website) }}">
+                                @error('website')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Address Street -->
+                            <div>
+                                <label for="address_street" class="block text-sm font-medium text-gray-300">Street Address</label>
+                                <input id="address_street" name="address_street" type="text" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white" value="{{ old('address_street', $company->address_street) }}">
+                                @error('address_street')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Address City -->
+                            <div>
+                                <label for="address_city" class="block text-sm font-medium text-gray-300">City</label>
+                                <input id="address_city" name="address_city" type="text" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white" value="{{ old('address_city', $company->address_city) }}">
+                                @error('address_city')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Address State -->
+                            <div>
+                                <label for="address_state" class="block text-sm font-medium text-gray-300">State/Province</label>
+                                <input id="address_state" name="address_state" type="text" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white" value="{{ old('address_state', $company->address_state) }}">
+                                @error('address_state')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Address Postal Code -->
+                            <div>
+                                <label for="address_postal_code" class="block text-sm font-medium text-gray-300">Postal Code</label>
+                                <input id="address_postal_code" name="address_postal_code" type="text" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white" value="{{ old('address_postal_code', $company->address_postal_code) }}">
+                                @error('address_postal_code')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Address Country -->
+                            <div>
+                                <label for="address_country" class="block text-sm font-medium text-gray-300">Country</label>
+                                <input id="address_country" name="address_country" type="text" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white" value="{{ old('address_country', $company->address_country) }}">
+                                @error('address_country')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
 
                             <!-- Notes -->
-                            <div>
-                                <x-input-label for="notes" :value="__('Notes')" />
-                                <x-textarea id="notes" name="notes" class="mt-1 block w-full">{{ old('notes', $company->notes) }}</x-textarea>
-                                <x-input-error class="mt-2" :messages="$errors->get('notes')" />
+                            <div class="md:col-span-2">
+                                <label for="notes" class="block text-sm font-medium text-gray-300">Notes</label>
+                                <textarea id="notes" name="notes" rows="3" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white">{{ old('notes', $company->notes) }}</textarea>
+                                @error('notes')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
-                        <div class="flex items-center justify-end mt-4">
-                            <x-primary-button class="ml-4">
-                                {{ __('Update Company') }}
-                            </x-primary-button>
+                        <div class="flex justify-end mt-6">
+                            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                                Update Company
+                            </button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-</x-app-layout>
+@endsection

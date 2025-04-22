@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\Company;
+use App\Services\ActivityService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -11,6 +12,13 @@ use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
+    protected $activityService;
+
+    public function __construct(ActivityService $activityService)
+    {
+        $this->activityService = $activityService;
+    }
+
     public function index(Request $request): View
     {
         $query = Customer::query()
@@ -50,10 +58,17 @@ class CustomerController extends Controller
             'notes' => 'nullable|max:1000'
         ]);
 
-        Customer::create($validated);
+        $customer = Customer::create($validated);
 
-        return redirect()->route('customers.index')
-            ->with('success', 'Customer created successfully.');
+        // Log activity
+        $this->activityService->log(
+            'create',
+            'Created customer ' . $customer->first_name . ' ' . $customer->last_name,
+            $customer,
+            'A new customer was added to the system'
+        );
+
+        return redirect()->route('customers.index')->with('success', 'Customer created successfully!');
     }
 
     public function show(Customer $customer): View
@@ -102,15 +117,29 @@ class CustomerController extends Controller
 
         $customer->update($validated);
 
-        return redirect()->route('customers.index')
-            ->with('success', 'Customer updated successfully.');
+        // Log activity
+        $this->activityService->log(
+            'update',
+            'Updated customer ' . $customer->first_name . ' ' . $customer->last_name,
+            $customer,
+            'Customer information was updated'
+        );
+
+        return redirect()->route('customers.index')->with('success', 'Customer updated successfully!');
     }
 
     public function destroy(Customer $customer): RedirectResponse
     {
+        // Log activity before deletion
+        $this->activityService->log(
+            'delete',
+            'Deleted customer ' . $customer->first_name . ' ' . $customer->last_name,
+            $customer,
+            'Customer was removed from the system'
+        );
+
         $customer->delete();
 
-        return redirect()->route('customers.index')
-            ->with('success', 'Customer deleted successfully.');
+        return redirect()->route('customers.index')->with('success', 'Customer deleted successfully!');
     }
 }

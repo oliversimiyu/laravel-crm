@@ -29,8 +29,12 @@ class SaleController extends Controller
 
         $sales = $query->latest('date')->paginate(10);
         $companies = Company::all();
+        $customers = Customer::all();
         
-        return view('sales.index', compact('sales', 'companies'));
+        // Define statuses for filtering
+        $statuses = ['pending', 'paid', 'cancelled'];
+        
+        return view('sales.index', compact('sales', 'companies', 'customers', 'statuses'));
     }
 
     public function create(): View

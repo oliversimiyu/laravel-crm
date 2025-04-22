@@ -30,8 +30,12 @@ class LeadController extends Controller
 
         $leads = $query->paginate(10);
         $companies = Company::all();
+        
+        // Define statuses and sources for filtering
+        $statuses = ['new', 'contacted', 'qualified', 'proposal', 'negotiation', 'closed_won', 'closed_lost'];
+        $sources = ['website', 'referral', 'social_media', 'email_campaign', 'cold_call', 'event', 'other'];
 
-        return view('leads.index', compact('leads', 'companies'));
+        return view('leads.index', compact('leads', 'companies', 'statuses', 'sources'));
     }
 
     public function create(): View

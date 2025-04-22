@@ -27,7 +27,11 @@ class CommunicationController extends Controller
 
         $communications = $query->latest('scheduled_at')->paginate(10);
         
-        return view('communications.index', compact('communications'));
+        // Define types and statuses for filtering
+        $types = ['email', 'call', 'meeting', 'note'];
+        $statuses = ['planned', 'completed', 'cancelled'];
+        
+        return view('communications.index', compact('communications', 'types', 'statuses'));
     }
 
     public function create(): View

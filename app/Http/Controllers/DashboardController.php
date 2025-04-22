@@ -5,31 +5,35 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Models\Customer;
 use App\Models\Lead;
-use App\Models\Communication;
-use App\Models\Task;
 use App\Models\Sale;
+use App\Services\ActivityService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
+    protected $activityService;
+
+    public function __construct(ActivityService $activityService)
+    {
+        $this->activityService = $activityService;
+    }
+
     public function index(): View
     {
+        // Calculate total revenue
+        $totalRevenue = Sale::sum('amount');
+
         $stats = [
             'companies' => Company::count(),
             'customers' => Customer::count(),
             'leads' => Lead::count(),
-            'communications' => Communication::count(),
-            'tasks' => Task::count(),
-            'sales' => Sale::count(),
+            'revenue' => $totalRevenue,
         ];
 
-        $recentActivities = [
-            'leads' => Lead::latest()->take(5)->get(),
-            'tasks' => Task::latest()->take(5)->get(),
-            'communications' => Communication::latest()->take(5)->get(),
-        ];
+        // Get recent activities (limited to 3)
+        $recentActivities = $this->activityService->getRecent(3);
 
         return view('dashboard', compact('stats', 'recentActivities'));
     }

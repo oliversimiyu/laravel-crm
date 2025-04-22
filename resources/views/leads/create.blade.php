@@ -1,106 +1,148 @@
-<x-app-layout>
-    <div class="card">
-        <h2 class="section-title">{{ __('Create Lead') }}</h2>
-        
-        <form method="POST" action="{{ route('leads.store') }}" class="space-y-6">
-            @csrf
+@extends('layouts.app')
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- First Name -->
-                <div class="auth-form-group">
-                    <x-input-label for="first_name" :value="__('First Name')" />
-                    <x-text-input id="first_name" name="first_name" type="text" class="mt-1 block w-full" :value="old('first_name')" required autofocus />
-                    <x-input-error class="mt-2" :messages="$errors->get('first_name')" />
-                </div>
-
-                <!-- Last Name -->
-                <div class="auth-form-group">
-                    <x-input-label for="last_name" :value="__('Last Name')" />
-                    <x-text-input id="last_name" name="last_name" type="text" class="mt-1 block w-full" :value="old('last_name')" required />
-                    <x-input-error class="mt-2" :messages="$errors->get('last_name')" />
-                </div>
-
-                <!-- Company -->
-                <div class="auth-form-group">
-                    <x-input-label for="company_id" :value="__('Company')" />
-                    <x-select id="company_id" name="company_id" class="mt-1 block w-full" required>
-                        <option value="">Select Company</option>
-                        @foreach($companies as $company)
-                            <option value="{{ $company->id }}" {{ old('company_id') == $company->id ? 'selected' : '' }}>
-                                {{ $company->name }}
-                            </option>
-                        @endforeach
-                    </x-select>
-                    <x-input-error class="mt-2" :messages="$errors->get('company_id')" />
-                </div>
-
-                <!-- Position -->
-                <div class="auth-form-group">
-                    <x-input-label for="position" :value="__('Position')" />
-                    <x-text-input id="position" name="position" type="text" class="mt-1 block w-full" :value="old('position')" required />
-                    <x-input-error class="mt-2" :messages="$errors->get('position')" />
-                </div>
-
-                <!-- Email -->
-                <div class="auth-form-group">
-                    <x-input-label for="email" :value="__('Email')" />
-                    <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email')" required />
-                    <x-input-error class="mt-2" :messages="$errors->get('email')" />
-                </div>
-
-                <!-- Phone -->
-                <div class="auth-form-group">
-                    <x-input-label for="phone" :value="__('Phone')" />
-                    <x-text-input id="phone" name="phone" type="text" class="mt-1 block w-full" :value="old('phone')" />
-                    <x-input-error class="mt-2" :messages="$errors->get('phone')" />
-                </div>
-
-                <!-- Source -->
-                <div class="auth-form-group">
-                    <x-input-label for="source" :value="__('Source')" />
-                    <x-text-input id="source" name="source" type="text" class="mt-1 block w-full" :value="old('source')" required />
-                    <x-input-error class="mt-2" :messages="$errors->get('source')" />
-                </div>
-
-                <!-- Value -->
-                <div class="auth-form-group">
-                    <x-input-label for="value" :value="__('Value')" />
-                    <x-text-input id="value" name="value" type="number" step="0.01" min="0" class="mt-1 block w-full" :value="old('value')" required />
-                    <x-input-error class="mt-2" :messages="$errors->get('value')" />
-                </div>
-
-                <!-- Status -->
-                <div class="auth-form-group">
-                    <x-input-label for="status" :value="__('Status')" />
-                    <x-select id="status" name="status" class="mt-1 block w-full" required>
-                        <option value="">Select Status</option>
-                        <option value="new" {{ old('status') == 'new' ? 'selected' : '' }}>New</option>
-                        <option value="contacted" {{ old('status') == 'contacted' ? 'selected' : '' }}>Contacted</option>
-                        <option value="qualified" {{ old('status') == 'qualified' ? 'selected' : '' }}>Qualified</option>
-                        <option value="proposal" {{ old('status') == 'proposal' ? 'selected' : '' }}>Proposal</option>
-                        <option value="negotiation" {{ old('status') == 'negotiation' ? 'selected' : '' }}>Negotiation</option>
-                        <option value="closed_won" {{ old('status') == 'closed_won' ? 'selected' : '' }}>Closed Won</option>
-                        <option value="closed_lost" {{ old('status') == 'closed_lost' ? 'selected' : '' }}>Closed Lost</option>
-                    </x-select>
-                    <x-input-error class="mt-2" :messages="$errors->get('status')" />
-                </div>
-
-                <!-- Notes -->
-                <div class="auth-form-group md:col-span-2">
-                    <x-input-label for="notes" :value="__('Notes')" />
-                    <x-textarea id="notes" name="notes" class="mt-1 block w-full">{{ old('notes') }}</x-textarea>
-                    <x-input-error class="mt-2" :messages="$errors->get('notes')" />
-                </div>
-            </div>
-
-            <div class="flex justify-end mt-6">
-                <x-primary-button>
-                    {{ __('Create Lead') }}
-                </x-primary-button>
-                <a href="{{ route('leads.index') }}" class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500 rounded-md font-semibold text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-25 transition ease-in-out duration-150">
-                    {{ __('Cancel') }}
+@section('content')
+    <div class="py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-white">Create Lead</h1>
+                <a href="{{ route('leads.index') }}" class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">
+                    Back to Leads
                 </a>
             </div>
-        </form>
+
+            <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                <div class="p-6 text-gray-100">
+                    <form method="POST" action="{{ route('leads.store') }}">
+                        @csrf
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- First Name -->
+                            <div>
+                                <label for="first_name" class="block text-sm font-medium text-gray-300">First Name</label>
+                                <input id="first_name" name="first_name" type="text" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white" value="{{ old('first_name') }}" required autofocus>
+                                @error('first_name')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Last Name -->
+                            <div>
+                                <label for="last_name" class="block text-sm font-medium text-gray-300">Last Name</label>
+                                <input id="last_name" name="last_name" type="text" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white" value="{{ old('last_name') }}" required>
+                                @error('last_name')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Company -->
+                            <div>
+                                <label for="company_id" class="block text-sm font-medium text-gray-300">Company</label>
+                                <select id="company_id" name="company_id" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white" required>
+                                    <option value="">Select Company</option>
+                                    @foreach($companies as $company)
+                                        <option value="{{ $company->id }}" {{ old('company_id') == $company->id ? 'selected' : '' }}>
+                                            {{ $company->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('company_id')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Position -->
+                            <div>
+                                <label for="position" class="block text-sm font-medium text-gray-300">Position</label>
+                                <input id="position" name="position" type="text" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white" value="{{ old('position') }}" required>
+                                @error('position')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Email -->
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
+                                <input id="email" name="email" type="email" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white" value="{{ old('email') }}" required>
+                                @error('email')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Phone -->
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-gray-300">Phone</label>
+                                <input id="phone" name="phone" type="text" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white" value="{{ old('phone') }}">
+                                @error('phone')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Source -->
+                            <div>
+                                <label for="source" class="block text-sm font-medium text-gray-300">Source</label>
+                                <select id="source" name="source" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white" required>
+                                    <option value="">Select Source</option>
+                                    <option value="website" {{ old('source') == 'website' ? 'selected' : '' }}>Website</option>
+                                    <option value="referral" {{ old('source') == 'referral' ? 'selected' : '' }}>Referral</option>
+                                    <option value="social_media" {{ old('source') == 'social_media' ? 'selected' : '' }}>Social Media</option>
+                                    <option value="email_campaign" {{ old('source') == 'email_campaign' ? 'selected' : '' }}>Email Campaign</option>
+                                    <option value="cold_call" {{ old('source') == 'cold_call' ? 'selected' : '' }}>Cold Call</option>
+                                    <option value="event" {{ old('source') == 'event' ? 'selected' : '' }}>Event</option>
+                                    <option value="other" {{ old('source') == 'other' ? 'selected' : '' }}>Other</option>
+                                </select>
+                                @error('source')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Value -->
+                            <div>
+                                <label for="value" class="block text-sm font-medium text-gray-300">Value (KES)</label>
+                                <input id="value" name="value" type="number" step="0.01" min="0" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white" value="{{ old('value') }}" required>
+                                @error('value')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Status -->
+                            <div>
+                                <label for="status" class="block text-sm font-medium text-gray-300">Status</label>
+                                <select id="status" name="status" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white" required>
+                                    <option value="">Select Status</option>
+                                    <option value="new" {{ old('status') == 'new' ? 'selected' : '' }}>New</option>
+                                    <option value="contacted" {{ old('status') == 'contacted' ? 'selected' : '' }}>Contacted</option>
+                                    <option value="qualified" {{ old('status') == 'qualified' ? 'selected' : '' }}>Qualified</option>
+                                    <option value="proposal" {{ old('status') == 'proposal' ? 'selected' : '' }}>Proposal</option>
+                                    <option value="negotiation" {{ old('status') == 'negotiation' ? 'selected' : '' }}>Negotiation</option>
+                                    <option value="closed_won" {{ old('status') == 'closed_won' ? 'selected' : '' }}>Closed Won</option>
+                                    <option value="closed_lost" {{ old('status') == 'closed_lost' ? 'selected' : '' }}>Closed Lost</option>
+                                </select>
+                                @error('status')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Notes -->
+                            <div class="md:col-span-2">
+                                <label for="notes" class="block text-sm font-medium text-gray-300">Notes</label>
+                                <textarea id="notes" name="notes" rows="3" class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-white">{{ old('notes') }}</textarea>
+                                @error('notes')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end mt-6 space-x-3">
+                            <a href="{{ route('leads.index') }}" class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">
+                                Cancel
+                            </a>
+                            <button type="submit" class="px-4 py-2 bg-orange-600 text-white rounded hover:bg-orange-700">
+                                Create Lead
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-</x-app-layout>
+@endsection
