@@ -12,6 +12,9 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        
+        <!-- Livewire Styles -->
+        @livewireStyles
     </head>
     <body>
         <div class="min-h-screen bg-gray-900 flex flex-col">
@@ -110,5 +113,8 @@
         </script>
         
         @stack('scripts')
+        
+        <!-- Livewire Scripts -->
+        @livewireScripts
     </body>
 </html>

@@ -38,16 +38,8 @@
                 <p class="card-value">{{ number_format($stats['leads'] ?? 0) }}</p>
             </div>
 
-            <!-- Revenue Card -->
-            <div class="card">
-                <div class="icon-wrapper purple-bg">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 purple-text" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                </div>
-                <h3 class="card-title">Revenue</h3>
-                <p class="card-value">KES {{ number_format($stats['revenue'] ?? 0) }}</p>
-            </div>
+            <!-- Revenue Card - Replaced with Livewire component -->
+            @livewire('revenue-counter')
         </div>
 
         <div class="grid-2-1">
@@ -113,30 +105,8 @@
                 </div>
             </div>
 
-            <!-- Recent Activity -->
-            <div class="card">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="section-title">Recent Activity</h2>
-                    <a href="{{ route('activities.index') }}" class="view-all-link">View All</a>
-                </div>
-                <div class="activity-list">
-                    @forelse($recentActivities as $activity)
-                        <div class="activity-item">
-                            <div class="activity-icon {{ $activity->color }}-bg">
-                                <span class="white-text">{{ $activity->icon }}</span>
-                            </div>
-                            <div class="activity-text">
-                                <p class="activity-title">{{ $activity->subject }}</p>
-                                <p class="activity-time">{{ \Carbon\Carbon::parse($activity->created_at)->diffForHumans() }}</p>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="empty-state">
-                            <p>No recent activities found</p>
-                        </div>
-                    @endforelse
-                </div>
-            </div>
+            <!-- Recent Activity - Replaced with Livewire component -->
+            @livewire('recent-activities', ['isDashboard' => true])
         </div>
     </div>
 @endsection

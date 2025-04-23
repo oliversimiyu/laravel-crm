@@ -33,7 +33,7 @@ class ActivityController extends Controller
                 $query->where('type', $type);
             });
 
-        $activities = $query->latest()->paginate(15);
+        $activities = $query->latest()->paginate(10); // Changed from 15 to 10 items per page
         
         // Get distinct activity types for filtering
         $activityTypes = Activity::distinct()->pluck('type')->toArray();

@@ -27,39 +27,7 @@
             </div>
         </div>
 
-        <div class="card">
-            <div class="activity-list-full">
-                @forelse($activities as $activity)
-                    <div class="activity-item">
-                        <div class="activity-icon {{ $activity->color }}-bg">
-                            <span class="white-text">{{ $activity->icon }}</span>
-                        </div>
-                        <div class="activity-text">
-                            <div class="flex justify-between items-center mb-1">
-                                <p class="activity-title">{{ $activity->subject }}</p>
-                                <p class="activity-time">{{ $activity->created_at->format('M d, Y H:i') }}</p>
-                            </div>
-                            @if($activity->description)
-                                <p class="activity-description">{{ $activity->description }}</p>
-                            @endif
-                            <div class="activity-meta">
-                                <span class="activity-type">{{ ucfirst($activity->type) }}</span>
-                                @if($activity->user)
-                                    <span class="activity-user">by {{ $activity->user->name }}</span>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                @empty
-                    <div class="empty-state">
-                        <p>No activities found</p>
-                    </div>
-                @endforelse
-            </div>
-            
-            <div class="mt-4">
-                {{ $activities->links() }}
-            </div>
-        </div>
+        <!-- Use the Livewire component for the activities list with pagination -->
+        @livewire('recent-activities', ['isDashboard' => false])
     </div>
 @endsection

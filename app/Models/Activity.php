@@ -66,6 +66,9 @@ class Activity extends Model
             'note' => '📝',
             'task' => '✓',
             'sale' => '$',
+            'payment' => '💰',
+            'invoice' => '📄',
+            'quote' => '📋',
             default => '•',
         };
     }
@@ -75,6 +78,25 @@ class Activity extends Model
      */
     public function getColorAttribute(): string
     {
+        // Check if this activity is related to an invoice or quote
+        $isInvoice = str_contains(strtolower($this->loggable_type ?? ''), 'invoice');
+        $isQuote = str_contains(strtolower($this->loggable_type ?? ''), 'quote');
+        
+        if ($isInvoice) {
+            return match($this->type) {
+                'payment' => 'green',
+                'email' => 'purple',
+                default => 'blue',
+            };
+        }
+        
+        if ($isQuote) {
+            return match($this->type) {
+                'email' => 'purple',
+                default => 'green',
+            };
+        }
+        
         return match($this->type) {
             'create' => 'green',
             'update' => 'blue',
@@ -85,6 +107,9 @@ class Activity extends Model
             'note' => 'teal',
             'task' => 'green',
             'sale' => 'green',
+            'payment' => 'green',
+            'invoice' => 'blue',
+            'quote' => 'green',
             default => 'gray',
         };
     }
